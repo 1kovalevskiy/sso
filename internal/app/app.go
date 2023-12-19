@@ -32,7 +32,7 @@ func Run(cfg *config.Config) {
 	server := grpcserver.New(l, cfg.GRPC.Port, interceptor)
 
 	authUseCase := usecase.New(l, repo.New(sqlite))
-	 
+
 	server.Register(authgrpc.New(authUseCase))
 
 	server.Start()

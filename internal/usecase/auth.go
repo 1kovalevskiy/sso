@@ -28,8 +28,8 @@ type (
 )
 
 type AuthUseCase struct {
-	log         *slog.Logger
-	repo		AuthRepo
+	log  *slog.Logger
+	repo AuthRepo
 }
 
 func New(
@@ -37,12 +37,12 @@ func New(
 	repo AuthRepo,
 ) *AuthUseCase {
 	return &AuthUseCase{
-		repo:		repo,
-		log:		log,
+		repo: repo,
+		log:  log,
 	}
 }
 
-func (a *AuthUseCase) Login(ctx context.Context, email string, password string, appID int,) (string, error) {
+func (a *AuthUseCase) Login(ctx context.Context, email string, password string, appID int) (string, error) {
 	const op = "Auth.Login"
 
 	log := a.log.With(

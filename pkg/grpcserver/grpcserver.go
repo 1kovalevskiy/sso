@@ -9,10 +9,10 @@ import (
 )
 
 type Server struct {
-	server          *grpc.Server
-	notify          chan error
-	log				*slog.Logger
-	port			int
+	server *grpc.Server
+	notify chan error
+	log    *slog.Logger
+	port   int
 }
 
 func New(log *slog.Logger, port int, interceptors ...grpc.ServerOption) *Server {
@@ -21,8 +21,8 @@ func New(log *slog.Logger, port int, interceptors ...grpc.ServerOption) *Server 
 	return &Server{
 		server: gRPCServer,
 		notify: make(chan error, 1),
-		log: log,
-		port: port,
+		log:    log,
+		port:   port,
 	}
 }
 
@@ -35,7 +35,7 @@ func (s *Server) Start() {
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
 	if err != nil {
-		s.notify <-  fmt.Errorf("%s: %w", op, err)
+		s.notify <- fmt.Errorf("%s: %w", op, err)
 	}
 
 	go func() {

@@ -18,7 +18,6 @@ type Auth interface {
 	RegisterNewUser(ctx context.Context, email string, pass string) (int, error)
 }
 
-
 type serverAPI struct {
 	ssov1.UnimplementedAuthServer
 	auth Auth
