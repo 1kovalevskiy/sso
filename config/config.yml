@@ -1,0 +1,9 @@
+app:
+  name: 'gRPC sso'
+  version: '1.0.0'
+
+grpc:
+  port: 9000
+
+sql:
+  timeout: '0.5s'
