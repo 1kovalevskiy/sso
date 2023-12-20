@@ -72,7 +72,7 @@ func (r *AuthRepo) GetUser(ctx context.Context, email string) (entity.User, erro
 func (r *AuthRepo) GetApp(ctx context.Context, id int) (entity.App, error) {
 	const op = "internal.usecase.repo_sqlite.GetApp"
 
-	stmt, err := r.DB.Prepare("SELECT id, name, secret FROM apps WHERE id = ?")
+	stmt, err := r.DB.Prepare("SELECT id, name, secret, ttl_hours FROM apps WHERE id = ?")
 	if err != nil {
 		return entity.App{}, fmt.Errorf("%s: %w", op, err)
 	}
@@ -80,7 +80,7 @@ func (r *AuthRepo) GetApp(ctx context.Context, id int) (entity.App, error) {
 	row := stmt.QueryRowContext(ctx, id)
 
 	var app entity.App
-	err = row.Scan(&app.ID, &app.Name, &app.Secret)
+	err = row.Scan(&app.ID, &app.Name, &app.Secret, &app.TTLHours)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return entity.App{}, fmt.Errorf("%s: %w", op, entity.ErrAppNotFound)

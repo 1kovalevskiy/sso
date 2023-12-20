@@ -118,7 +118,7 @@ func (a *AuthUseCase) RegisterNewUser(ctx context.Context, email string, pass st
 func NewToken(user entity.User, app entity.App) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
-	duration := time.Duration(app.TTL_hours) * time.Hour
+	duration := time.Duration(app.TTLHours) * time.Hour
 	claims := token.Claims.(jwt.MapClaims)
 	claims["uid"] = user.ID
 	claims["email"] = user.Email

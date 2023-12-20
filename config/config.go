@@ -36,7 +36,7 @@ func init() {
 	}
 }
 
-func NewConfig() (*Config, error) {
+func NewConfig(path string) (*Config, error) {
 	config := &Config{}
 
 	err := cleanenv.ReadConfig("./config/config.yml", config)

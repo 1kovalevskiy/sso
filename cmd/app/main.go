@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/1kovalevskiy/sso/config"
@@ -8,7 +9,11 @@ import (
 )
 
 func main() {
-	cfg, err := config.NewConfig()
+	var configPath string
+	flag.StringVar(&configPath, "config-path", "", "path to config")
+	flag.Parse()
+
+	cfg, err := config.NewConfig(configPath)
 	if err != nil {
 		log.Fatalf("Config error: %s", err)
 	}
