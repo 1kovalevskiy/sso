@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/1kovalevskiy/sso/tests/suite"
+	"github.com/1kovalevskiy/sso/integration-test/suite"
 
 	ssov1 "github.com/1kovalevskiy/proto_sso/gen/go/sso"
 	"github.com/brianvoe/gofakeit/v6"

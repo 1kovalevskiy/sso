@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/1kovalevskiy/sso/config"
-	"github.com/1kovalevskiy/sso/pkg/migrator"
 
 	ssov1 "github.com/1kovalevskiy/proto_sso/gen/go/sso"
 	"google.golang.org/grpc"
@@ -22,7 +21,7 @@ type Suite struct {
 }
 
 const (
-	grpcHost = "localhost"
+	grpcHost = "app"
 )
 
 // New creates new test suite.
@@ -32,15 +31,10 @@ func New(t *testing.T) (context.Context, *Suite) {
 	t.Helper()
 	t.Parallel()
 
-	cfg, err := config.NewConfig("./config/config.yml")
+	cfg, err := config.NewConfig("../config/config.yml")
 	if err != nil {
 		t.Fatalf("Couldn't get config: %v", err)
 	}
-	cfg.SQL.URL = "./storage/sso_test.db" //":memory:"
-
-	migrator.MigrateUp("./migrations/", cfg.SQL.URL, "migrations")
-	migrator.MigrateUp("./tests/migrations/", cfg.SQL.URL, "migrations")
-
 
 	ctx, cancelCtx := context.WithTimeout(context.Background(), time.Hour)
 

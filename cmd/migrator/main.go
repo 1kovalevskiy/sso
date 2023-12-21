@@ -17,7 +17,6 @@ func main() {
 
 	if configPath == "" {
 		log.Fatalf("Set config-path")
-
 	}
 	if migrationsPath == "" {
 		log.Fatalf("Set migrations-path")

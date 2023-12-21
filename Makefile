@@ -22,3 +22,11 @@ linter-dotenv: ### check by dotenv linter
 migrate: ### run migrate
 	go run ./cmd/migrator --config-path="./config/config.yml" --migrations-path=./migrations
 .PHONY: migrate
+
+test: ### run tests
+	go test ./tests
+.PHONY: test
+
+compose-up: ### run migrate
+	docker-compose up --build && docker-compose logs -f
+.PHONY: compose-up

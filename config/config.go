@@ -39,7 +39,7 @@ func init() {
 func NewConfig(path string) (*Config, error) {
 	config := &Config{}
 
-	err := cleanenv.ReadConfig("./config/config.yml", config)
+	err := cleanenv.ReadConfig(path, config)
 	if err != nil {
 		return nil, fmt.Errorf("config error: %w", err)
 	}

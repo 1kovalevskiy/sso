@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+
+  app:
+    build: .
+    env_file: .env
+    container_name: app
+    image: app
+    environment:
+      SQL_URL: "./sso.db"
+    ports:
+      - 9000:9000
+    command: [/start.sh]
+    
+
+  integration:
+    build:
+      context: .
+      dockerfile: integration-test/Dockerfile
+    container_name: integration
+    image: integration
+    depends_on:
+      - app
+    
