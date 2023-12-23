@@ -2,11 +2,15 @@ package entity
 
 import "errors"
 
-var ErrAppNotFound = errors.New("app not found")
+var (
+	ErrAppExists   = errors.New("app already exists")
+	ErrAppNotFound = errors.New("app not found")
+)
 
 type App struct {
-	ID        int
-	Name      string
-	Secret    string
-	TTLHours int
+	ID			int
+	Name		string
+	PassHash	[]byte
+	Secret		string
+	TTLHours	int
 }

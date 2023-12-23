@@ -8,7 +8,7 @@ var (
 )
 
 type User struct {
-	ID       int
-	Email    string
-	PassHash []byte
+	ID			int
+	Email		string
+	PassHash	[]byte
 }

@@ -8,8 +8,10 @@ CREATE INDEX IF NOT EXISTS idx_email ON users (email);
 
 CREATE TABLE IF NOT EXISTS apps
 (
-    id     INTEGER PRIMARY KEY,
-    name   TEXT NOT NULL UNIQUE,
-    secret TEXT NOT NULL,
-    ttl_hours INTEGER NOT NULL
+    id          INTEGER PRIMARY KEY,
+    name        TEXT    NOT NULL UNIQUE,
+    pass_hash   BLOB    NOT NULL,
+    secret      TEXT    NOT NULL,
+    ttl_hours   INTEGER NOT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_name ON apps (name);

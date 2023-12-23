@@ -29,7 +29,7 @@ const (
 // TODO: for pipeline tests we need to wait for app is ready
 func New(t *testing.T) (context.Context, *Suite) {
 	t.Helper()
-	t.Parallel()
+	// t.Parallel()
 
 	cfg, err := config.NewConfig("../config/config.yml")
 	if err != nil {

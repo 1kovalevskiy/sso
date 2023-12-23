@@ -14,6 +14,7 @@ import (
 )
 
 type Auth interface {
+	GetCreateApp(ctx context.Context, name string, password string, secret string, ttlHour int) (int, error)
 	Login(ctx context.Context, email string, password string, appID int) (string, error)
 	RegisterNewUser(ctx context.Context, email string, pass string) (int, error)
 }
@@ -27,6 +28,35 @@ func New(auth Auth) func(gRPCServer *grpc.Server) {
 	return func(gRPCServer *grpc.Server) {
 		ssov1.RegisterAuthServer(gRPCServer, &serverAPI{auth: auth})
 	}
+}
+
+func (s *serverAPI) AddApp(ctx context.Context, in *ssov1.AddAppRequest) (*ssov1.AddAppResponse, error) {
+	if in.Name == "" {
+		return nil, status.Error(codes.InvalidArgument, "name is required")
+	}
+
+	if in.Password == "" {
+		return nil, status.Error(codes.InvalidArgument, "password is required")
+	}
+
+	if in.Secret == "" {
+		return nil, status.Error(codes.InvalidArgument, "secret is required")
+	}
+
+	if in.GetTtlHour() == 0 {
+		return nil, status.Error(codes.InvalidArgument, "ttl_hour is required")
+	}
+
+	id, err := s.auth.GetCreateApp(ctx, in.GetName(), in.GetPassword(), in.GetSecret(), int(in.GetTtlHour()))
+	if err != nil {
+		if errors.Is(err, error_.ErrInvalidCredentials) {
+			return nil, status.Error(codes.InvalidArgument, "invalid name or password")
+		}
+
+		return nil, status.Error(codes.Internal, "failed to login")
+	}
+
+	return &ssov1.AddAppResponse{AppId: int32(id)}, nil
 }
 
 func (s *serverAPI) Login(ctx context.Context, in *ssov1.LoginRequest) (*ssov1.LoginResponse, error) {

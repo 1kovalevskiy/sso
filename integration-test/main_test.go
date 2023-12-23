@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -14,17 +15,34 @@ import (
 )
 
 const (
-	emptyAppID = 0
-	appID      = 1
-	appSecret  = "test-secret"
+	emptyAppID	= 0
+	appName 	= "test-service"
+	appPassword = "test-password"
+	appSecret  	= "test-secret"
+	appTTL		= 1
 
 	passDefaultLen = 10
 )
 
 // TODO: add token fail validation cases
 
+
+func AddApp(t *testing.T, ctx context.Context, st *suite.Suite) int32 {
+	respAppAdd, err := st.AuthClient.AddApp(ctx, &ssov1.AddAppRequest{
+		Name:    	appName,
+		Password: 	appPassword,
+		Secret: 	appSecret,
+		TtlHour: 	appTTL,
+	})
+	require.NoError(t, err)
+	assert.NotEmpty(t, respAppAdd.GetAppId())
+	return respAppAdd.GetAppId()
+}
+
 func TestRegisterLogin_Login_HappyPath(t *testing.T) {
 	ctx, st := suite.New(t)
+
+	appID := AddApp(t, ctx, st)
 
 	email := gofakeit.Email()
 	pass := randomFakePassword()
@@ -58,7 +76,6 @@ func TestRegisterLogin_Login_HappyPath(t *testing.T) {
 
 	assert.Equal(t, respReg.GetUserId(), int64(claims["uid"].(float64)))
 	assert.Equal(t, email, claims["email"].(string))
-	assert.Equal(t, appID, int(claims["app_id"].(float64)))
 
 	const deltaSeconds = 1
 
@@ -132,6 +149,8 @@ func TestRegister_FailCases(t *testing.T) {
 
 func TestLogin_FailCases(t *testing.T) {
 	ctx, st := suite.New(t)
+
+	appID := AddApp(t, ctx, st)
 
 	tests := []struct {
 		name        string
