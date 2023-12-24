@@ -17,12 +17,12 @@ import (
 )
 
 func Run(cfg *config.Config) {
-
+	const op = "internal - app - Run"
 	l := logger.New("local")
 
 	sqlite, err := sqlite_.New(cfg.SQL.URL, cfg.SQL.Timeout)
 	if err != nil {
-		l.Error("app - Run - sql.New", error_.Err(err))
+		l.Error(op+" - sql.New", error_.Err(err))
 		return
 	}
 	defer sqlite.Close()
@@ -42,9 +42,9 @@ func Run(cfg *config.Config) {
 
 	select {
 	case s := <-interrupt:
-		l.Info("app - Run - signal: " + s.String())
+		l.Info(op+" - signal: " + s.String())
 	case err = <-server.Notify():
-		l.Error("app - Run - grpcServer.Notify:", error_.Err(err))
+		l.Error(op+" - grpcServer.Notify:", error_.Err(err))
 	}
 
 	server.Shutdown()

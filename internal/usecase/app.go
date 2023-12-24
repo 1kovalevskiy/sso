@@ -13,7 +13,7 @@ import (
 
 
 func (a *AuthUseCase) createApp(ctx context.Context, name string, pass string, secret string, ttlHour int) (int, error) {
-	const op = "usecase.Auth.createApp"
+	const op = "internal - usecase - Auth.createApp"
 
 	log := a.log.With(
 		slog.String("op", op),
@@ -40,7 +40,7 @@ func (a *AuthUseCase) createApp(ctx context.Context, name string, pass string, s
 }
 
 func (a *AuthUseCase) getAppByName(ctx context.Context, name string, password string) (int, error) {
-	const op = "usecase.Auth.getAppByName"
+	const op = "internal - usecase - Auth.getAppByName"
 
 	log := a.log.With(
 		slog.String("op", op),
@@ -74,7 +74,7 @@ func (a *AuthUseCase) getAppByName(ctx context.Context, name string, password st
 }
 
 func (a *AuthUseCase) updateApp(ctx context.Context, id_ int, secret string, ttlHour int) (int, error) {
-	const op = "usecase.Auth.updateApp"
+	const op = "internal - usecase - Auth.updateApp"
 
 	log := a.log.With(
 		slog.String("op", op),

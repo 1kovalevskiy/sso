@@ -12,7 +12,7 @@ import (
 )
 
 func (a *AuthUseCase) Login(ctx context.Context, email string, password string, appID int) (string, error) {
-	const op = "usecase.Auth.Login"
+	const op = "internal - usecase - Auth.Login"
 
 	log := a.log.With(
 		slog.String("op", op),
@@ -58,7 +58,7 @@ func (a *AuthUseCase) Login(ctx context.Context, email string, password string, 
 }
 
 func (a *AuthUseCase) RegisterNewUser(ctx context.Context, email string, pass string) (int, error) {
-	const op = "usecase.Auth.RegisterNewUser"
+	const op = "internal - usecase - Auth.RegisterNewUser"
 
 	log := a.log.With(
 		slog.String("op", op),

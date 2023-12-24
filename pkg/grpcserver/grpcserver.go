@@ -31,7 +31,7 @@ func (s *Server) Register(registrator func(*grpc.Server)) {
 }
 
 func (s *Server) Start() {
-	const op = "grpcserver.Start"
+	const op = "pkg - grpcserver - Server.Start"
 
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
 	if err != nil {

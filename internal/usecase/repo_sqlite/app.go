@@ -11,7 +11,7 @@ import (
 )
 
 func (r *AuthRepo) GetAppForUser(ctx context.Context, id int) (entity.App, error) {
-	const op = "internal.usecase.repo_sqlite.GetAppForUser"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.GetAppForUser"
 
 	stmt, err := r.DB.Prepare(`SELECT id, name, pass_hash, secret, ttl_hours FROM apps WHERE id = ?`)
 	if err != nil {
@@ -35,7 +35,7 @@ func (r *AuthRepo) GetAppForUser(ctx context.Context, id int) (entity.App, error
 }
 
 func (r *AuthRepo) GetAppByName(ctx context.Context, name string) (entity.App, error) {
-	const op = "internal.usecase.repo_sqlite.GetAppByName"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.GetAppByName"
 
 	stmt, err := r.DB.Prepare(`SELECT id, name, pass_hash, secret, ttl_hours FROM apps WHERE name = ?`)
 	if err != nil {
@@ -59,7 +59,7 @@ func (r *AuthRepo) GetAppByName(ctx context.Context, name string) (entity.App, e
 }
 
 func (r *AuthRepo) InsertApp(ctx context.Context, name string, passHash []byte, secret string, ttlHour int) (int, error) {
-	const op = "internal.usecase.repo_sqlite.InsertApp"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.InsertApp"
 
 	stmt, err := r.DB.Prepare(`INSERT INTO apps(name, pass_hash, secret, ttl_hours) VALUES(?, ?, ?, ?)`)
 	if err != nil {
@@ -85,7 +85,7 @@ func (r *AuthRepo) InsertApp(ctx context.Context, name string, passHash []byte, 
 }
 
 func (r *AuthRepo) UpdateApp(ctx context.Context, id_ int, secret string, ttlHour int) (int, error) {
-	const op = "internal.usecase.repo_sqlite.UpdateApp"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.UpdateApp"
 
 	stmt, err := r.DB.Prepare(`UPDATE apps SET secret = ?, ttl_hours = ? WHERE id = ?`)
 	if err != nil {

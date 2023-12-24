@@ -11,7 +11,7 @@ import (
 )
 
 func (r *AuthRepo) InsertUser(ctx context.Context, email string, passHash []byte) (int, error) {
-	const op = "internal.usecase.repo_sqlite.SaveUser"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.SaveUser"
 
 	stmt, err := r.DB.Prepare(`INSERT INTO users(email, pass_hash) VALUES(?, ?)`)
 	if err != nil {
@@ -37,7 +37,7 @@ func (r *AuthRepo) InsertUser(ctx context.Context, email string, passHash []byte
 }
 
 func (r *AuthRepo) GetUser(ctx context.Context, email string) (entity.User, error) {
-	const op = "internal.usecase.repo_sqlite.GetUser"
+	const op = "internal - usecase - repo_sqlite - AuthRepo.GetUser"
 
 	stmt, err := r.DB.Prepare(`SELECT id, email, pass_hash FROM users WHERE email = ?`)
 	if err != nil {
