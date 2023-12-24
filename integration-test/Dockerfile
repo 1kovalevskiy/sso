@@ -11,4 +11,4 @@ RUN apk add --no-cache gcc musl-dev
 COPY . /app
 WORKDIR /app
 
-CMD ["go", "test", "-v", "./integration-test/..."]
+CMD ["go", "test", "-count=1", "-v", "./integration-test/..."]

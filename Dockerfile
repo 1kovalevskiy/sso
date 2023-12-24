@@ -26,4 +26,4 @@ COPY ./migrations /migrations
 COPY scripts/start.sh /
 RUN chmod +x /start.sh
 WORKDIR /
-CMD ["/app"]
+CMD ["/app", "--config-path=./config/config.yml"]

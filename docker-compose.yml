@@ -7,18 +7,11 @@ services:
     container_name: app
     image: app
     environment:
-      SQL_URL: "./sso.db"
+      SQL_URL: "/db/sso.db"
+    volumes:
+      - sqlite-data:/db
     ports:
       - 9000:9000
-    command: [/start.sh]
     
-
-  integration:
-    build:
-      context: .
-      dockerfile: integration-test/Dockerfile
-    container_name: integration
-    image: integration
-    depends_on:
-      - app
-    
+volumes:
+  sqlite-data:

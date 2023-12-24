@@ -23,6 +23,14 @@ migrate: ### run migrate
 	go run ./cmd/migrator --config-path="./config/config.yml" --migrations-path=./migrations
 .PHONY: migrate
 
+run-service: ### run service
+	docker-compose -f docker-compose.yml up --build
+.PHONY: run-service
+
+migrate-service: ### migrate service
+	docker-compose -f docker-compose.yml run --rm app /migrator --config-path=./config/config.yml --migrations-path=./migrations
+.PHONY: migrate-service
+
 integration-test: ### run migrate
-	docker-compose up --build && docker-compose logs -f
+	docker-compose -f docker-compose.yml -f docker-compose.integration-test.yml up --build
 .PHONY: integration-test
